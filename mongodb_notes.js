@@ -5,10 +5,19 @@
 //  Update - Update - Update
 //  Dalete - Remove - Delete
 
-//  Inserting docs
+// Show databases
+show dbs
 
-doc = {"name", "Smith", "age": 30, "profession": "hacker"};
+// Create database
+use database_name
+
+// Show current database
+db
+
+//  Inserting docs
+doc = { name: "Smith", age: 30, profession: "hacker" };
 db.people.insert(doc);
+db.people.insert({ name: "Tom", age: 25, profession: "driver" })
 db.people.find(); // all documents in the collection people
 //  Primary key _id is unmutable
 
@@ -122,3 +131,17 @@ db.arrays.update({ _id: 0 }, { $addToSet : { a : 5 }});
 // Upserts
 // update existing document, or create new document
 db.people.update({ name: George}, { age: 40 }, { upsert : true });
+
+// Multiple update
+// { } - every document in the collection
+// multi: true tells mongodb to update multiple documents, otherwise only one document will be updated
+db.people.update( { }, { $set: { title : "Dr" }}, { multi : true });
+
+// Removing data
+// remove method
+db.poeple.remove( {name: "Alex" });
+db.people.remove( {name: { $gt : "M" }});
+// remove all documents in the collection
+db.people.remove( { } );
+// drop hole collection
+db.people.drop();
