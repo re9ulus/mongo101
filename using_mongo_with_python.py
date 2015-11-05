@@ -21,7 +21,7 @@ def find():
 		# projection argument is optional
 		cursor = students.find(query, projection)
 		# Example of Sort, Skip, Limit
-		# Alayes exccuted in this order: 1 Sort, 2 Skip, 3 Limit
+		# Alayes executed in this order: 1 Sort, 2 Skip, 3 Limit
 		# cursor = students.find(query).sort('name', pymongo.ASCENDING).skip(2).limit(2)
 	except Exception as e:
 		print "Unexpected error:", type(e), e
@@ -46,4 +46,31 @@ def find_one():
 
 	print doc
 
-find()
+
+def insert():
+	richard = {'name': 'Richard', 'age': 21, 'interests': ['math']}
+	try:
+		students.insert_one(richard)
+	except Exception as e:
+		print "Unexpected error:", type(e), e
+
+
+def insert_many():
+	tom = {'name': 'Tom', 'age': 20, 'interests': ['weapon']}
+	jerry = {'name': 'Jerry', 'age': 18, 'interests': ['run']}
+	people_to_insert = [tom, jerry]
+	try:
+		students.insert_many(people_to_insert, ordered=True)
+	except Exception as e:
+		print "Unexpected error:", type(e), e
+
+
+def update():
+	try:
+		students.update_one({'name': 'Mark'}, {'$set': {'interests': ['art']}})
+		# Update each record
+		#students.update_many({ }, {'$set': {'class': ['philosophy']}})
+	except Exception as e:
+		print 'Unexpected error', type(e), e
+
+update()
